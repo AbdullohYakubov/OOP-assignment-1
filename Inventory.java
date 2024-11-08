@@ -64,10 +64,10 @@ public class Inventory {
             // if(items[i] == items[items.length - 1])
             //     items[i] = items[i] + " ";
             
-            if(items[i] == items[0])
-                itemsAsString =  items[i];
-            else
-                itemsAsString = itemsAsString + items[i];
+            // if(items[i] == items[0])
+            //     itemsAsString =  items[i];
+            // else
+            itemsAsString = itemsAsString + items[i];
         }
 
         return itemsAsString;

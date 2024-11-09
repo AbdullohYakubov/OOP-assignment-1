@@ -175,26 +175,23 @@ public class Game {
                             System.out.println(">> You found a watermelon! Now figure out what to do with it!\nP.S. Granny loves hiding important things inside other items.");
                             inventory.addItem("watermelon");
                         }else
-                            System.out.println("There is no fridge in the room!");
-                    
+                            System.out.println(">> There is no fridge in the room!");
                         break;
 
                     case "search mattress":                        
                         if(hasBed){
                             System.out.println(">> You found a hammer! Now figure out why you may want to use it!");
                             inventory.addItem("hammer");
-                        }else{
-                            System.out.println("There is no mattress in the room!");
-                        }
+                        }else
+                            System.out.println(">> There is no mattress in the room!");
                         break;
 
                     case "search cracked jar":                        
                         if(hasShelves){
                             System.out.println(">> You found a screwdriver!\nHint: The kennel has a screw door.");
                             inventory.addItem("screwdriver");
-                        }else{
-                            System.out.println("There is no cracked jar in the room!");
-                        }
+                        }else
+                            System.out.println(">> There is no cracked jar in the room!");
                         break;
 
                     case "inventory":

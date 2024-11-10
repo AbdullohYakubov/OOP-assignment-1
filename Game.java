@@ -47,13 +47,14 @@ public class Game {
             String startCommand = scr.nextLine();
 
             if(startCommand.toLowerCase().trim().equals("start")){
-                scr.close();
+                // scr.close();
                 break;
             }
         }
         
         System.out.println(">> " + foyer.getDescription());
         gameMap.placeRoom(posOfFoyer, 'F');
+        score.visitRoom();
         
         boolean hasWatermelon = false;
         boolean hasHammer = false;
@@ -152,33 +153,28 @@ public class Game {
                     break;
 
                 case "look":                        
-                    for(int i = 0; i < rooms.length; i++){
-                        if(posOfPlayer.getX() == rooms[i].getPosition().getX() && posOfPlayer.getY() == rooms[i].getPosition().getY()){
-                            System.out.println(">> " + rooms[i].getDescription());
-                            break;
-                        }
-                    }
+                    System.out.println(">> " + currentRoom.getDescription());
                     break;
 
                 case "look fridge":                        
-                    if(currentRoom.getName().equals("Kitchen")){
+                    if(currentRoom.getName().equals("Kitchen"))
                         System.out.println(">> There is an old fridge with a worn and slightly rusted exterior with faded colors in the corner of the room. As you open the fridge, a sharp metallic smell of blood fills the air.");
-                    } else
+                    else
                         System.out.println(">> There is no fridge in the room!");
                     break;
 
                 
                 case "look bed":                        
-                    if(currentRoom.getName().equals("Bedroom 1")){
+                    if(currentRoom.getName().equals("Bedroom 1"))
                         System.out.println(">> This is Granny's bed, and it has a bleak, unsettling appearance. It's old and made of wood that's chipped and splintered in places. On the thin, sagging, and discolored mattress, there lies a hidden item that Granny carries with her all the time.");
-                    }else
+                    else
                         System.out.println(">> There is no bed in the room!");
                     break;
 
                 case "look shelves":                        
-                    if(currentRoom.getName().equals("Storage Room")){
+                    if(currentRoom.getName().equals("Storage Room"))
                         System.out.println(">> The Storage room shelves are made of rough, untreated wood, and they hold random ominous items, a cracked jar for example.");
-                    }else
+                    else
                         System.out.println(">> There are no shelves in the room!");
                     break;
 
@@ -210,9 +206,9 @@ public class Game {
                         System.out.println(">> There is no mattress in the room!");
                     break;
 
-                case "search cracked jar":      
+                case "search jar":      
                     if(hasScrewdriver){
-                        System.out.println(">> There is nothing in the cracked jar. You already took the screwdriver!");
+                        System.out.println(">> There is nothing in the jar. You already took the screwdriver!");
                         break; 
                     }          
 
@@ -221,7 +217,7 @@ public class Game {
                         inventory.addItem("screwdriver");
                         hasScrewdriver = true;
                     }else
-                        System.out.println(">> There is no cracked jar in the room!");
+                        System.out.println(">> There is no jar in the room!");
                     break;
                 
                 case "chop watermelon": 
@@ -231,50 +227,48 @@ public class Game {
                         score.solvePuzzle();
                         hasMainKey = true;
                         if(brokePlanks && usedPadlockKey)
-                            System.out.println(">> Woah! You just found a Master Key! You are one step away from escape!");
+                            System.out.println(">> Whoa! You just found a Master Key! You are one step away from escape!");
                         else if(brokePlanks && hasPadlockKey)
-                            System.out.println(">> Woah! You just found a Master Key! Almost there...!");
+                            System.out.println(">> Whoa! You just found a Master Key! Almost there...!");
                         else
-                            System.out.println(">> Woah! You just found a Master Key! You are one step closer to escape!");
+                            System.out.println(">> Whoa! You just found a Master Key! You are one step closer to escape!");
                     }else if(inventory.hasItem("watermelon") == -1 && currentRoom.getName().equals("Guillotine Area"))
                         System.out.println(">> You do not have a watermelon in your inventory!");
                     else
-                        System.out.println(">> You are not in the Guillotine Area!");
+                        System.out.println(">> You are not in the right place to chop the watermelon!");
                     break;
 
                 case "break planks":
                     if(inventory.hasItem("hammer") != -1 && currentRoom.getName().equals("Foyer")){
-                        inventory.removeItem("hammer");
                         score.solvePuzzle();
                         brokePlanks = true;
                         if(usedMainKey && usedPadlockKey)
                             System.out.println(">> You did it! You finally escaped the house! You got lucky man!");
                         else if(usedMainKey || usedPadlockKey)
-                            System.out.println(">> Great! But carefull...! She almost heard it! You are one step away from escape!");
+                            System.out.println(">> Great! But careful...! She almost heard it! You are one step away from escape!");
                         else if((hasMainKey || hasPadlockKey) || (!hasMainKey && !hasPadlockKey))
-                            System.out.println(">> Great! But carefull...! She almost heard it! You are one step closer to escape!");
+                            System.out.println(">> Great! But careful...! She almost heard it! You are one step closer to escape!");
                     }else if(inventory.hasItem("hammer") == -1 && currentRoom.getName().equals("Foyer"))
                         System.out.println(">> You do not have a hammer in your inventory!");
                     else
-                        System.out.println(">> You need to go to the foyer to use the hammer!");
+                        System.out.println(">> You are not in the right place to use the hammer!");
                     break;
 
                 case "open kennel":   
                     if(inventory.hasItem("screwdriver") != -1 && currentRoom.getName().equals("Kennel Area")){
-                        inventory.removeItem("screwdriver");
                         inventory.addItem("padlock key");
                         score.solvePuzzle();
                         hasPadlockKey = true;
                         if(brokePlanks && usedMainKey)
-                            System.out.println(">> Awesome! You opened the kennel and earned a padlock key! You are one step away from escape!");
+                            System.out.println(">> Awesome! You just opened the kennel and earned a padlock key! You are one step away from escape!");
                         else if(brokePlanks && hasMainKey)
-                            System.out.println(">> Woah! You just found a Padlock key! Almost there...!");
+                            System.out.println(">> Awesome! You just opened the kennel and earned a padlock key! Almost there...!");
                         else
-                            System.out.println(">> Woah! You just found a Padlock key! You are one step closer to escape!");
+                            System.out.println(">> Awesome! You just opened the kennel and earned a padlock key! You are one step closer to escape!");
                     }else if(inventory.hasItem("screwdriver") == -1 && currentRoom.getName().equals("Kennel"))
-                        System.out.println(">> You do not have a screwdriver in your inventory!");
+                        System.out.println(">> You do not have the screwdriver in your inventory!");
                     else
-                        System.out.println(">> You are not in the Kennel!");
+                        System.out.println(">> You are not in the right place to use the screwdriver!");
                     break;
 
                 case "unlock padlock":                        
@@ -284,14 +278,14 @@ public class Game {
                         usedPadlockKey = true;
                         if(brokePlanks && usedMainKey)
                             System.out.println(">> You did it! You finally escaped the house! You got lucky man!");
-                        else if(brokePlanks && hasPadlockKey)
-                            System.out.println(">> You unlocked the padlock! You are one step away from escape!");
+                        else if(brokePlanks && hasMainKey)
+                            System.out.println(">> You just unlocked the padlock! You are one step away from escape!");
                         else
-                            System.out.println(">> You unlocked the padlock! You are one step closer to escape!");
+                            System.out.println(">> You just unlocked the padlock! You are one step closer to escape!");
                     }else if(!hasPadlockKey && currentRoom.getName().equals("Foyer"))
-                        System.out.println(">> You do not have a padlock key in your inventory!");
+                        System.out.println(">> You do not have the padlock key in your inventory!");
                     else
-                        System.out.println(">> You need to go to the Foyer to escape!");
+                        System.out.println(">> You are not in the right place to unlock the padlock!");
                     break;
                 
                 case "unlock door":                        
@@ -302,13 +296,13 @@ public class Game {
                         if(brokePlanks && usedPadlockKey)
                             System.out.println(">> You did it! You finally escaped the house! You got lucky man!");
                         else if(brokePlanks && hasPadlockKey)
-                            System.out.println(">> You unlocked the main door! Now you need to unlock the padlock!");
+                            System.out.println(">> You just unlocked the door! Now you need to unlock the padlock!");
                         else
-                            System.out.println(">> You unlocked the main door! But there is still something else you need to do!");
+                            System.out.println(">> You just unlocked the door! But there is still something else you need to do!");
                     }else if(!usedMainKey && currentRoom.getName().equals("Foyer"))
-                        System.out.println(">> You do not have a main key in your inventory!");
+                        System.out.println(">> You do not have the main key in your inventory!");
                     else
-                        System.out.println(">> You need to go to the Foyer to escape!");
+                        System.out.println(">> You are not in the right place to unlock the door!");
                     break;
 
                 case "inventory":
@@ -316,7 +310,7 @@ public class Game {
                     break;
                 
                 case "score":
-                    System.out.println(score.getScore());
+                    System.out.println(">> Your current score is: " + score.getScore());
                     break;
 
                 case "map":
@@ -324,15 +318,15 @@ public class Game {
                     break;
 
                 case "help":
-                    System.out.println("The list of commands:\n1. move <north/south/east/west> - The player moves to a new room based on the direction.\n2. look - Displays a description of the room the player is in.\n3. look <feature> - Displays a more detailed description of a feature of a room.\n4. look <item> - Displays a description of an item.\n5. search <item> - Searches for the item and puts it into the player's inventory.\n6. open <item> - Opens the item.\n7. chop <item> - chops an item off\n8. inventory - Displays a list of all items the player has obtained.\n9. score - Displays the player's current score.\n10. map - Displays a text-based map of the current explored game world.\n11. help - Displays a help message.\n12. quit - Quits the game.");
+                    System.out.println(">> The list of commands:\n1. move <north/south/east/west> - The player moves to a new room based on the direction.\n2. look - Displays a description of the room the player is in.\n3. look <feature> - Displays a more detailed description of a feature of a room.\n4. look <item> - Displays a description of an item.\n5. search <item> - Searches for the item and puts it into the player's inventory.\n6. open <item> - Opens the item and puts what's found into the inventory.\n7. chop <item> - Chops an item off.\n8. break <item> - Breaks an item.\n9. unlock <item> - Unlocks a lock.\n10. inventory - Displays a list of all items the player has obtained.\n11. score - Displays the player's current score.\n12. map - Displays a text-based map of the current explored game world.\n13. help - Displays a help message.\n14. quit - Quits the game.");
                     break;
                 
                 case "quit": 
-                    scr.close();
+                    // scr.close();
                     return;
                     
                 default:
-                    System.out.println("Incorrect command! Please type 'help' to see the list of commands.");
+                    System.out.println(">> Incorrect command! Please type 'help' to see the list of commands.");
                     break;
             } 
             

@@ -5,7 +5,7 @@ public class Game {
 
         System.out.println("Shshsh! \nGranny is asleep! Get out of there! You only have five days! \nAll you need is in the house... and be quite!\nShe hears everything and Granny is crazy...\n...Good luck. \n\n");
 
-        Map gameMap = new Map(5, 6);
+        Map gameMap = new Map(3, 5);
 
         Position posOfPlayer = new Position(3, 3);
         
@@ -23,7 +23,7 @@ public class Game {
         Position posOfBedroom2 = new Position(3, 5);
 
         Inventory inventory = new Inventory();
-        Score score = new Score(1);
+        Score score = new Score(24);
 
         Room foyer = new Room("Foyer", "This is the foyer of Granny's house. This is the only exit in the house. The door is locked in three ways: door lock, padlock, and planks.", 'F', posOfFoyer);
         Room kitchen = new Room("Kitchen", "This is Granny's kitchen where she cooks her favourite human blood soup and keeps it in the fridge.", 'K', posOfKitchen);
@@ -78,7 +78,6 @@ public class Game {
             boolean isPlayerAtSouthBoundary = (posOfPlayer.getX() == 2 && posOfPlayer.getY() == 1) || (posOfPlayer.getX() == 3 && posOfPlayer.getY() == 2) || (posOfPlayer.getX() == 3 && posOfPlayer.getY() == 3) || (posOfPlayer.getX() == 3 && posOfPlayer.getY() == 4) || (posOfPlayer.getX() == 3 && posOfPlayer.getY() == 5);
 
             switch (userCommand.toLowerCase().trim()) {
-                // move <direction> commands
                 case "move east":
                     if(!isPlayerAtEastBoundary){
                         int playerYPos = posOfPlayer.getY();
@@ -324,7 +323,7 @@ public class Game {
                     break;
                 
                 case "score":
-                    System.out.println(">> Your current score: " + score.getScore());
+                    System.out.println(">> Current score: " + score.getScore());
                     break;
 
                 case "map":
@@ -343,9 +342,12 @@ public class Game {
                     System.out.println(">> Incorrect command! Please type 'help' to see the list of commands.");
                     break;
             }
-            if(usedMainKey && brokePlanks && usedPadlockKey)
+
+            if(usedMainKey && brokePlanks && usedPadlockKey){
                 scr.close();
+                System.out.println(">> Total score: " + score.getScore());
                 return;
+            }
         }   
     }
 }

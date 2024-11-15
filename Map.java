@@ -1,8 +1,8 @@
 public class Map {
+    final private char EMPTY = '.';
     private int width;
     private int height;
     private Character[][] mapArr;
-    final private char EMPTY = '.';
 
     public Map(int width, int height){
         this.width = width;

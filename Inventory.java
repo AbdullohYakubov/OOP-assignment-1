@@ -48,17 +48,16 @@ public class Inventory {
     }
 
     public String displayInventory(){
-        String itemsAsString = ">> You have:";
+        String itemsAsString = "";
 
         for(int i = 0; i < itemsStored; i++){
             if(items[i] != null){
-                itemsAsString = itemsAsString + " " + items[i];
+                itemsAsString += items[i] + " ";
             }
         }
 
-        if(itemsStored == 0){
-            itemsAsString = ">> Your inventory is empty.";
-        }
+        // if(itemsStored == 0)
+        //     itemsAsString = ">> Your inventory is empty.";
         
         return itemsAsString;
     }

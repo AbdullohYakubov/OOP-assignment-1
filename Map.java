@@ -2,7 +2,6 @@ public class Map {
     private int width;
     private int height;
     private Character[][] mapArr;
-    private Position position;
     final private char EMPTY = '.';
 
     public Map(int width, int height){

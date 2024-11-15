@@ -5,7 +5,7 @@ public class Game {
 
         System.out.println("Shshsh! \nGranny is asleep! Get out of there! You only have five days! \nAll you need is in the house... and be quite!\nShe hears everything and Granny is crazy...\n...Good luck. \n\n");
 
-        Map gameMap = new Map(3, 5);
+        Map gameMap = new Map(5, 6);
 
         Position posOfPlayer = new Position(3, 3);
         
@@ -47,7 +47,6 @@ public class Game {
             String startCommand = scr.nextLine();
 
             if(startCommand.toLowerCase().trim().equals("start")){
-                // scr.close();
                 break;
             }
         }
@@ -221,6 +220,11 @@ public class Game {
                     break;
                 
                 case "chop watermelon": 
+                    if(hasMainKey){
+                        System.out.println(">> You already chopped off the watermelon!");
+                        break;
+                    }
+                    
                     if(inventory.hasItem("watermelon") != -1 && currentRoom.getName().equals("Guillotine Area")){
                         inventory.removeItem("watermelon");
                         inventory.addItem("main key");
@@ -239,6 +243,11 @@ public class Game {
                     break;
 
                 case "break planks":
+                    if(brokePlanks){
+                        System.out.println(">> You already broke the planks!");
+                        break;
+                    }
+
                     if(inventory.hasItem("hammer") != -1 && currentRoom.getName().equals("Foyer")){
                         score.solvePuzzle();
                         brokePlanks = true;
@@ -251,10 +260,15 @@ public class Game {
                     }else if(inventory.hasItem("hammer") == -1 && currentRoom.getName().equals("Foyer"))
                         System.out.println(">> You do not have a hammer in your inventory!");
                     else
-                        System.out.println(">> You are not in the right place to use the hammer!");
+                        System.out.println(">> You are not in the right place to break the planks!");
                     break;
 
-                case "open kennel":   
+                case "open kennel": 
+                    if(hasPadlockKey){
+                        System.out.println(">> You already opened the kennel!");
+                        break;
+                    }
+
                     if(inventory.hasItem("screwdriver") != -1 && currentRoom.getName().equals("Kennel Area")){
                         inventory.addItem("padlock key");
                         score.solvePuzzle();
@@ -265,10 +279,10 @@ public class Game {
                             System.out.println(">> Awesome! You just opened the kennel and earned a padlock key! Almost there...!");
                         else
                             System.out.println(">> Awesome! You just opened the kennel and earned a padlock key! You are one step closer to escape!");
-                    }else if(inventory.hasItem("screwdriver") == -1 && currentRoom.getName().equals("Kennel"))
-                        System.out.println(">> You do not have the screwdriver in your inventory!");
+                    }else if(inventory.hasItem("screwdriver") == -1 && currentRoom.getName().equals("Kennel Area"))
+                        System.out.println(">> You do not have a screwdriver in your inventory!");
                     else
-                        System.out.println(">> You are not in the right place to use the screwdriver!");
+                        System.out.println(">> You are not in the right place to open the kennel!");
                     break;
 
                 case "unlock padlock":                        
@@ -310,7 +324,7 @@ public class Game {
                     break;
                 
                 case "score":
-                    System.out.println(">> Your current score is: " + score.getScore());
+                    System.out.println(">> Your current score: " + score.getScore());
                     break;
 
                 case "map":
@@ -318,20 +332,20 @@ public class Game {
                     break;
 
                 case "help":
-                    System.out.println(">> The list of commands:\n1. move <north/south/east/west> - The player moves to a new room based on the direction.\n2. look - Displays a description of the room the player is in.\n3. look <feature> - Displays a more detailed description of a feature of a room.\n4. look <item> - Displays a description of an item.\n5. search <item> - Searches for the item and puts it into the player's inventory.\n6. open <item> - Opens the item and puts what's found into the inventory.\n7. chop <item> - Chops an item off.\n8. break <item> - Breaks an item.\n9. unlock <item> - Unlocks a lock.\n10. inventory - Displays a list of all items the player has obtained.\n11. score - Displays the player's current score.\n12. map - Displays a text-based map of the current explored game world.\n13. help - Displays a help message.\n14. quit - Quits the game.");
+                    System.out.println(">> The list of commands:\n1. move <north/south/east/west> - The player moves to a new room based on the direction.\n2. look - Displays a description of the room the player is in.\n3. look <feature> - Displays a more detailed description of a feature of a room.\n4. look <item> - Displays a description of an item.\n5. search <item> - Searches for the item and puts it into the player's inventory.\n6. open <item> - Opens the item and puts what's found into the inventory.\n7. chop <item> - Chops an item off.\n8. break <item> - Breaks an item.\n9. unlock <item> - Unlocks an item.\n10. inventory - Displays a list of all items the player has obtained.\n11. score - Displays the player's current score.\n12. map - Displays a text-based map of the current explored game world.\n13. help - Displays a help message.\n14. quit - Quits the game.");
                     break;
                 
                 case "quit": 
-                    // scr.close();
+                    scr.close();
                     return;
                     
                 default:
                     System.out.println(">> Incorrect command! Please type 'help' to see the list of commands.");
                     break;
-            } 
-            
+            }
             if(usedMainKey && brokePlanks && usedPadlockKey)
-                break;
+                scr.close();
+                return;
         }   
     }
 }
